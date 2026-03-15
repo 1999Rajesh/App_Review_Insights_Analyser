@@ -6,24 +6,29 @@ interface PlayStoreFetcherProps {
 }
 
 const PlayStoreFetcher: React.FC<PlayStoreFetcherProps> = ({ onFetchComplete }) => {
-  const [appId, setAppId] = useState('');
   const [weeks, setWeeks] = useState(8);
   const [maxReviews, setMaxReviews] = useState(500);
-  const [country, setCountry] = useState('us');
-  const [language, setLanguage] = useState('en');
+  const [recipientName, setRecipientName] = useState('');
+  const [recipientEmail, setRecipientEmail] = useState('');
   const [fetching, setFetching] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleFetch = async () => {
-    if (!appId.trim()) {
-      setError('Please enter a Google Play Store app ID');
+    // Validation
+    if (!recipientName.trim()) {
+      setError('Please enter recipient name');
       return;
     }
 
-    // Basic validation
-    const appIdRegex = /^[a-z][a-z0-9_]+(\.[a-z0-9_]+)+$/i;
-    if (!appIdRegex.test(appId)) {
-      setError('Invalid app ID format. Example: com.whatsapp or com.instagram.android');
+    if (!recipientEmail.trim()) {
+      setError('Please enter recipient email');
+      return;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(recipientEmail)) {
+      setError('Please enter a valid email address');
       return;
     }
 
@@ -32,17 +37,17 @@ const PlayStoreFetcher: React.FC<PlayStoreFetcherProps> = ({ onFetchComplete }) 
 
     try {
       const result = await reviewsAPI.fetchPlayStoreReviews({
-        app_id: appId,
         weeks: weeks,
         max_reviews: maxReviews,
-        country: country,
-        language: language,
+        recipient_name: recipientName,
+        recipient_email: recipientEmail,
       });
 
       onFetchComplete(result.data);
       
       // Clear form
-      setAppId('');
+      setRecipientName('');
+      setRecipientEmail('');
     } catch (err: any) {
       setError(err.response?.data?.detail || 'Failed to fetch reviews from Play Store');
     } finally {
@@ -53,91 +58,72 @@ const PlayStoreFetcher: React.FC<PlayStoreFetcherProps> = ({ onFetchComplete }) 
   return (
     <div style={styles.container}>
       <div style={styles.header}>
-        <h3 style={styles.title}>🤖 Auto-Fetch from Google Play Store</h3>
+        <h3 style={styles.title}>📊 Weekly Review Insights</h3>
         <p style={styles.description}>
-          Automatically fetch reviews directly from Google Play Store - no CSV upload needed!
+          Automatically fetch and analyze reviews from Google Play Store
         </p>
       </div>
 
       <div style={styles.form}>
-        <div style={styles.mainInput}>
-          <label style={styles.label}>Google Play Store App ID</label>
-          <input
-            type="text"
-            value={appId}
-            onChange={(e) => setAppId(e.target.value)}
-            placeholder="e.g., com.whatsapp, com.spotify.music, com.instagram.android"
-            style={styles.input}
-            disabled={fetching}
-          />
-          <p style={styles.helpText}>
-            Find the app ID in the Play Store URL: play.google.com/store/apps/details?id=<strong>com.example.app</strong>
-          </p>
+        <div style={styles.mainSection}>
+          <h4 style={styles.sectionTitle}>📥 Analysis Settings</h4>
+          
+          <div style={styles.optionsRow}>
+            <div style={styles.optionGroup}>
+              <label style={styles.label}>📅 Weeks to Analyze</label>
+              <input
+                type="number"
+                value={weeks}
+                onChange={(e) => setWeeks(parseInt(e.target.value))}
+                style={styles.input}
+                min="1"
+                max="52"
+                disabled={fetching}
+              />
+            </div>
+
+            <div style={styles.optionGroup}>
+              <label style={styles.label}>📊 Max Reviews</label>
+              <input
+                type="number"
+                value={maxReviews}
+                onChange={(e) => setMaxReviews(parseInt(e.target.value))}
+                style={styles.input}
+                min="10"
+                max="5000"
+                disabled={fetching}
+              />
+            </div>
+          </div>
         </div>
 
-        <div style={styles.optionsRow}>
-          <div style={styles.optionGroup}>
-            <label style={styles.label}>Weeks</label>
+        <div style={styles.divider}></div>
+
+        <div style={styles.emailSection}>
+          <h4 style={styles.sectionTitle}>📧 Recipient Details</h4>
+          
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Recipient Name</label>
             <input
-              type="number"
-              value={weeks}
-              onChange={(e) => setWeeks(parseInt(e.target.value))}
-              style={styles.smallInput}
-              min="1"
-              max="52"
+              type="text"
+              value={recipientName}
+              onChange={(e) => setRecipientName(e.target.value)}
+              placeholder="e.g., John Doe"
+              style={styles.input}
               disabled={fetching}
             />
           </div>
 
-          <div style={styles.optionGroup}>
-            <label style={styles.label}>Max Reviews</label>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Recipient Email</label>
             <input
-              type="number"
-              value={maxReviews}
-              onChange={(e) => setMaxReviews(parseInt(e.target.value))}
-              style={styles.smallInput}
-              min="10"
-              max="5000"
+              type="email"
+              value={recipientEmail}
+              onChange={(e) => setRecipientEmail(e.target.value)}
+              placeholder="e.g., john@example.com"
+              style={styles.input}
               disabled={fetching}
             />
-          </div>
-
-          <div style={styles.optionGroup}>
-            <label style={styles.label}>Country</label>
-            <select
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-              style={styles.smallInput}
-              disabled={fetching}
-            >
-              <option value="us">🇺🇸 US</option>
-              <option value="uk">🇬🇧 UK</option>
-              <option value="in">🇮🇳 India</option>
-              <option value="ca">🇨🇦 Canada</option>
-              <option value="au">🇦🇺 Australia</option>
-              <option value="de">🇩🇪 Germany</option>
-              <option value="fr">🇫🇷 France</option>
-              <option value="jp">🇯🇵 Japan</option>
-              <option value="br">🇧🇷 Brazil</option>
-            </select>
-          </div>
-
-          <div style={styles.optionGroup}>
-            <label style={styles.label}>Language</label>
-            <select
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
-              style={styles.smallInput}
-              disabled={fetching}
-            >
-              <option value="en">English</option>
-              <option value="es">Spanish</option>
-              <option value="fr">French</option>
-              <option value="de">German</option>
-              <option value="pt">Portuguese</option>
-              <option value="ja">Japanese</option>
-              <option value="hi">Hindi</option>
-            </select>
           </div>
         </div>
 
@@ -145,31 +131,31 @@ const PlayStoreFetcher: React.FC<PlayStoreFetcherProps> = ({ onFetchComplete }) 
 
         <button
           onClick={handleFetch}
-          disabled={fetching || !appId.trim()}
+          disabled={fetching}
           style={{
             ...styles.fetchButton,
-            ...(fetching || !appId.trim() ? styles.buttonDisabled : {}),
+            ...(fetching ? styles.buttonDisabled : {}),
           }}
         >
           {fetching ? (
             <>
               <span style={styles.spinner}></span>
-              Fetching Reviews...
+              Fetching & Analyzing Reviews...
             </>
           ) : (
             <>
-              🚀 Fetch Play Store Reviews
+              ✨ Generate Weekly Insights Report
             </>
           )}
         </button>
 
         <div style={styles.infoBox}>
-          <strong>💡 How to find App ID:</strong>
+          <strong>💡 How it works:</strong>
           <ol style={styles.steps}>
-            <li>Go to Google Play Store website</li>
-            <li>Search for your app</li>
-            <li>Copy the ID from URL after <code>?id=</code></li>
-            <li>Example: <code>com.whatsapp</code> from <code>play.google.com/store/apps/details?id=com.whatsapp</code></li>
+            <li>Fetches reviews from configured Play Store app</li>
+            <li>AI analyzes sentiment and key themes</li>
+            <li>Generates actionable insights report</li>
+            <li>Emails digest to specified recipient</li>
           </ol>
         </div>
       </div>
@@ -194,7 +180,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   title: {
     margin: '0 0 10px 0',
     color: '#2d3748',
-    fontSize: '22px',
+    fontSize: '24px',
     fontWeight: '700',
   },
   description: {
@@ -208,7 +194,42 @@ const styles: { [key: string]: React.CSSProperties } = {
     flexDirection: 'column',
     gap: '20px',
   },
-  mainInput: {
+  mainSection: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '15px',
+  },
+  sectionTitle: {
+    margin: '0 0 10px 0',
+    color: '#4a5568',
+    fontSize: '16px',
+    fontWeight: '700',
+  },
+  optionsRow: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+    gap: '20px',
+  },
+  optionGroup: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
+  },
+  input: {
+    padding: '14px 18px',
+    border: '2px solid #e2e8f0',
+    borderRadius: '10px',
+    fontSize: '15px',
+    color: '#2d3748',
+    backgroundColor: 'white',
+    transition: 'all 0.2s',
+  },
+  emailSection: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '15px',
+  },
+  inputGroup: {
     display: 'flex',
     flexDirection: 'column',
     gap: '8px',
@@ -218,37 +239,10 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontSize: '14px',
     fontWeight: '600',
   },
-  input: {
-    padding: '14px 18px',
-    border: '2px solid #e2e8f0',
-    borderRadius: '10px',
-    fontSize: '16px',
-    color: '#2d3748',
-    transition: 'all 0.2s',
-    backgroundColor: 'white',
-  },
-  helpText: {
-    color: '#a0aec0',
-    fontSize: '13px',
-    fontStyle: 'italic',
-  },
-  optionsRow: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
-    gap: '15px',
-  },
-  optionGroup: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '6px',
-  },
-  smallInput: {
-    padding: '12px 14px',
-    border: '2px solid #e2e8f0',
-    borderRadius: '8px',
-    fontSize: '15px',
-    color: '#2d3748',
-    backgroundColor: 'white',
+  divider: {
+    height: '2px',
+    backgroundColor: '#e2e8f0',
+    margin: '10px 0',
   },
   errorBanner: {
     backgroundColor: 'linear-gradient(135deg, #fee 0%, #fcc 100%)',
@@ -261,7 +255,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     animation: 'shake 0.5s ease-out',
   },
   fetchButton: {
-    backgroundColor: '#667eea',
+    backgroundColor: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
     color: 'white',
     border: 'none',
     padding: '16px 30px',

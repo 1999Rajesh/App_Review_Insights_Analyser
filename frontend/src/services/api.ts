@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 // Use Railway URL as default (update with your actual Railway URL)
-const API_BASE_URL = 'http://app-review-insights-analyser.railway.internal/api';
+// For local testing, use localhost
+const API_BASE_URL = 'http://localhost:8000/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -64,11 +65,10 @@ export const reviewsAPI = {
   },
 
   fetchPlayStoreReviews: async (params: {
-    app_id: string;
     weeks: number;
     max_reviews: number;
-    country: string;
-    language: string;
+    recipient_name?: string;
+    recipient_email?: string;
   }) => {
     const response = await api.post('/api/reviews/fetch-play-store', params);
     return response.data;

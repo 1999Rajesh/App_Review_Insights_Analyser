@@ -198,22 +198,21 @@ async def import_sample_data(weeks: int = 8) -> Dict:
 
 @router.post("/fetch-play-store")
 async def fetch_play_store_reviews(
-    app_id: str = Body(..., description="Google Play Store app ID (e.g., com.whatsapp)"),
     weeks: int = Body(default=8, description="Number of weeks to look back"),
     max_reviews: int = Body(default=500, description="Maximum number of reviews to fetch"),
-    country: str = Body(default="us", description="Country code"),
-    language: str = Body(default="en", description="Language code")
+    recipient_name: Optional[str] = Body(None, description="Recipient name for email"),
+    recipient_email: Optional[str] = Body(None, description="Recipient email for email")
 ) -> Dict:
     """
     Fetch reviews directly from Google Play Store.
+    Uses configured app ID from environment variables.
     No CSV upload required!
     
     Args:
-        app_id: Google Play Store app ID
         weeks: Weeks to look back
         max_reviews: Max reviews to fetch
-        country: Country code
-        language: Language code
+        recipient_name: Optional recipient name
+        recipient_email: Optional recipient email
         
     Returns:
         Summary of fetched reviews
@@ -221,12 +220,17 @@ async def fetch_play_store_reviews(
     global reviews_db
     
     try:
+        # Use configured app ID from environment
+        app_id = settings.PLAY_STORE_DEFAULT_APP_ID
+        country = settings.PLAY_STORE_COUNTRY
+        language = settings.PLAY_STORE_LANGUAGE
+        
         # Validate app_id format
         scraper = get_play_scraper()
         if not scraper.validate_app_id(app_id):
             raise HTTPException(
                 status_code=400,
-                detail="Invalid app_id format. Example: com.whatsapp or com.instagram.android"
+                detail="Invalid configured app_id format. Check PLAY_STORE_DEFAULT_APP_ID in environment"
             )
         
         # Fetch reviews
@@ -261,8 +265,8 @@ async def fetch_play_store_reviews(
             "total_in_database": len(reviews_db),
             "weeks": weeks,
             "max_reviews_requested": max_reviews,
-            "country": country,
-            "language": language
+            "recipient_name": recipient_name,
+            "recipient_email": recipient_email
         }
         
     except HTTPException:
