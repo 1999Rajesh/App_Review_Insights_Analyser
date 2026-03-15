@@ -10,6 +10,7 @@ from app.utils.pii_remover import sanitize_reviews
 from app.services.groq_analyzer import GroqAnalyzer
 from app.services.email_sender import EmailSender
 from app.services.google_play_scraper import get_play_scraper
+from app.services.play_store_scraper import PlayStoreScraper
 from app.config import settings
 
 router = APIRouter(prefix="/api/reviews", tags=["reviews"])
@@ -198,80 +199,58 @@ async def import_sample_data(weeks: int = 8) -> Dict:
 
 @router.post("/fetch-play-store")
 async def fetch_play_store_reviews(
-    weeks: int = Body(default=8, description="Number of weeks to look back"),
-    max_reviews: int = Body(default=500, description="Maximum number of reviews to fetch"),
-    recipient_name: Optional[str] = Body(None, description="Recipient name for email"),
-    recipient_email: Optional[str] = Body(None, description="Recipient email for email")
+    weeks: int = Body(default=8, ge=1, le=52, description="Number of weeks to look back (1-52)"),
+    max_reviews: int = Body(default=500, ge=10, le=5000, description="Maximum reviews to fetch (10-5000)")
 ) -> Dict:
     """
-    Fetch reviews directly from Google Play Store.
-    Uses configured app ID from environment variables.
-    No CSV upload required!
+    Fetch reviews from Google Play Store with automatic filtering.
+    Uses configured app ID, language, and country from environment variables.
+    Applies PII removal, quality filters, and stores in JSON format.
     
     Args:
-        weeks: Weeks to look back
-        max_reviews: Max reviews to fetch
-        recipient_name: Optional recipient name
-        recipient_email: Optional recipient email
+        weeks: Weeks to look back (default: 8)
+        max_reviews: Max reviews to fetch (default: 500)
         
     Returns:
-        Summary of fetched reviews
+        Summary of fetched reviews with metadata
+        
+    Raises:
+        HTTPException: On scrape failure
     """
-    global reviews_db
-    
     try:
-        # Use configured app ID from environment
-        app_id = settings.PLAY_STORE_DEFAULT_APP_ID
-        country = settings.PLAY_STORE_COUNTRY
-        language = settings.PLAY_STORE_LANGUAGE
+        # Initialize our new scraper service
+        scraper = PlayStoreScraper()
         
-        # Validate app_id format
-        scraper = get_play_scraper()
-        if not scraper.validate_app_id(app_id):
-            raise HTTPException(
-                status_code=400,
-                detail="Invalid configured app_id format. Check PLAY_STORE_DEFAULT_APP_ID in environment"
-            )
-        
-        # Fetch reviews
-        play_reviews = await scraper.fetch_reviews(
-            app_id=app_id,
+        # Fetch and store reviews (saves to data/reviews/YYYY-MM-DD.json)
+        result = await scraper.fetch_and_store(
             weeks=weeks,
-            max_reviews=max_reviews,
-            country=country,
-            language=language
+            max_reviews=max_reviews
         )
         
-        if not play_reviews:
-            return {
-                "message": "No reviews found matching criteria",
-                "fetched_count": 0,
-                "play_store_count": 0,
-                "total_in_database": len(reviews_db)
-            }
-        
-        # Remove PII
-        sanitized_data = sanitize_reviews([r.model_dump() for r in play_reviews])
-        cleaned_reviews = [Review(**data) for data in sanitized_data]
-        
-        # Add to database
-        reviews_db.extend(cleaned_reviews)
+        if not result['success']:
+            raise HTTPException(
+                status_code=500,
+                detail="Failed to fetch reviews from Play Store"
+            )
         
         return {
-            "message": f"Successfully fetched {len(cleaned_reviews)} reviews from Google Play Store",
-            "app_id": app_id,
-            "fetched_count": len(cleaned_reviews),
-            "play_store_count": len(cleaned_reviews),
-            "total_in_database": len(reviews_db),
-            "weeks": weeks,
-            "max_reviews_requested": max_reviews,
-            "recipient_name": recipient_name,
-            "recipient_email": recipient_email
+            "success": True,
+            "message": f"Successfully fetched {result['reviews_fetched']} reviews",
+            "metadata": result['metadata'],
+            "file_path": result.get('file_path')
         }
         
-    except HTTPException:
-        raise
+    except SystemExit as e:
+        # Scraper exited with error
+        raise HTTPException(
+            status_code=500,
+            detail=f"Play Store scraper failed: {str(e)}"
+        )
     except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error fetching Play Store reviews: {str(e)}"
+        )
         raise HTTPException(status_code=500, detail=f"Error fetching Play Store reviews: {str(e)}")
 
 

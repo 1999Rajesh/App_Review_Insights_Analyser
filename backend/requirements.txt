@@ -30,3 +30,6 @@ pytz==2024.1
 
 # Google Play Store scraper
 google-play-scraper==1.2.4
+
+# Language detection for review filtering
+langdetect==1.0.9

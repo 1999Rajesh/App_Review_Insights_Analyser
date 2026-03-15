@@ -1,0 +1,36 @@
+{
+  "metadata": {
+    "scrapedAt": "2026-03-15T16:07:28.797746",
+    "packageId": "com.nextbillion.groww",
+    "weeksRequested": 2,
+    "totalFetched": 153031,
+    "afterDateFilter": 2870,
+    "totalAfterFilters": 590,
+    "filterStats": {
+      "too_short": 2131,
+      "has_emoji": 92,
+      "wrong_language": 0,
+      "pii_removed": 0
+    },
+    "dateRange": {
+      "from": "2026-03-01T16:26:34",
+      "to": "2026-03-14T15:43:59"
+    },
+    "configuration": {
+      "language": "en",
+      "country": "in",
+      "minWordCount": 5,
+      "allowEmojis": false,
+      "requiredLanguage": "en"
+    }
+  },
+  "reviews": [
+    {
+      "reviewId": "c410a171-0bad-4ffd-85d1-efef6ee67bac",
+      "userName": "shanmukh rao",
+      "userImage": "https://play-lh.googleusercontent.com/a-/ALV-UjXsvom_MgiC3s43zzL4njtQhxDApkmoVA8VcWLRL_PaCagBr8tMZQ",
+      "content": "Yesterday, I installed the Groww app and began intraday trading. After buying stocks, I tried to exit my positions but faced an issue with the app. I called customer support and waited about 10 minutes. After a 43 Minute call, she was told that I needed to use a laptop to exit. I realised I would have been in a tough spot if I hadn’t had a laptop available. I also worry about what might have happened if I had invested a larger amount and faced a bigger loss while using the app.",
+      "score": 1,
+      "thumbsUpCount": 3,
+      "reviewCreatedVersion": "18.4.2",
+      "at": 

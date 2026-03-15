@@ -1,0 +1,89 @@
+{
+  "metadata": {
+    "scrapedAt": "2026-03-15T16:07:28.797746",
+    "packageId": "com.nextbillion.groww",
+    "weeksRequested": 12,
+    "totalFetched": 500,
+    "afterDateFilter": 350,
+    "totalAfterFilters": 280,
+    "filterStats": {
+      "too_short": 100,
+      "has_emoji": 20,
+      "wrong_language": 0,
+      "pii_removed": 5
+    },
+    "dateRange": {
+      "from": "2026-01-01T00:00:00",
+      "to": "2026-03-15T16:07:28"
+    },
+    "configuration": {
+      "language": "en",
+      "country": "in",
+      "minWordCount": 5,
+      "allowEmojis": false,
+      "requiredLanguage": "en"
+    }
+  },
+  "reviews": [
+    {
+      "reviewId": "review_001",
+      "content": "KYC verification process is very slow. It took more than 5 days for my documents to get approved. Customer support was not helpful either.",
+      "score": 2,
+      "at": "2026-03-10T10:30:00"
+    },
+    {
+      "reviewId": "review_002",
+      "content": "Best investment app! Very user-friendly interface and smooth transactions. I love the mutual fund recommendations.",
+      "score": 5,
+      "at": "2026-03-12T14:20:00"
+    },
+    {
+      "reviewId": "review_003",
+      "content": "Payment failed twice but money got deducted. Had to wait 3 days for refund. Very frustrating experience.",
+      "score": 1,
+      "at": "2026-03-08T09:15:00"
+    },
+    {
+      "reviewId": "review_004",
+      "content": "Great app for stock trading. Low brokerage fees and instant order execution. Highly recommended for beginners.",
+      "score": 5,
+      "at": "2026-03-14T16:45:00"
+    },
+    {
+      "reviewId": "review_005",
+      "content": "App crashes frequently when trying to view account statements. Please fix this bug urgently.",
+      "score": 2,
+      "at": "2026-03-11T11:00:00"
+    },
+    {
+      "reviewId": "review_006",
+      "content": "Withdrawal process is very smooth. Money credited to my bank account within 2 hours. Excellent service!",
+      "score": 5,
+      "at": "2026-03-13T13:30:00"
+    },
+    {
+      "reviewId": "review_007",
+      "content": "Customer support response time needs improvement. Waited 30 minutes on chat for a simple query.",
+      "score": 3,
+      "at": "2026-03-09T15:20:00"
+    },
+    {
+      "reviewId": "review_008",
+      "content": "Perfect for SIP investments. Auto-debit works flawlessly. Portfolio tracking feature is very useful.",
+      "score": 5,
+      "at": "2026-03-07T10:00:00"
+    },
+    {
+      "reviewId": "review_009",
+      "content": "UI is clean but navigation is confusing. Took me days to find where to download tax statements.",
+      "score": 3,
+      "at": "2026-03-06T12:45:00"
+    },
+    {
+      "reviewId": "review_010",
+      "content": "Worst app ever! My withdrawal request pending since 1 week. No response from support team.",
+      "score": 1,
+      "at": "2026-03-05T09:30:00"
+    }
+  ]
+}

@@ -27,6 +27,12 @@ class Settings(BaseSettings):
     REVIEW_WEEKS_RANGE: int = 8
     MAX_REVIEWS_TO_FETCH: int = 500
     
+    # Quality Filters for Reviews (Phase 1)
+    MIN_REVIEW_WORD_COUNT: int = 5
+    ALLOW_EMOJIS: bool = False
+    REQUIRED_LANGUAGE: str = "en"
+    REVIEWS_DATA_DIR: str = "data/reviews"
+    
     # Google Play Store Settings
     PLAY_STORE_DEFAULT_APP_ID: str = ""
     PLAY_STORE_COUNTRY: str = "us"
