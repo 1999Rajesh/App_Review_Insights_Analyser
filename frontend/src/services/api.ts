@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-// Use Railway public URL (update with your actual Railway domain)
-// Get your URL from: https://railway.app -> Your Project -> Settings -> Domains
-const API_BASE_URL = 'https://your-app-production.up.railway.app/api';
+// Railway public URL - App Review Insights Analyzer
+const API_BASE_URL = 'https://appreviewinsightsanalyser-production.up.railway.app/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
