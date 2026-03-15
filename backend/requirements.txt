@@ -1,0 +1,32 @@
+# FastAPI and core dependencies
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+python-multipart==0.0.6
+
+# Google Gemini LLM SDK (Primary)
+google-generativeai==0.3.2
+
+# Groq LLM SDK (Deprecated - kept for backward compatibility)
+groq==0.4.2
+
+# Data processing
+pandas==2.2.0
+python-dateutil==2.8.2
+
+# Environment and validation
+python-dotenv==1.0.0
+pydantic==2.5.3
+pydantic-settings==2.1.0
+
+# Email (built-in smtplib, just adding email utils)
+email-validator==2.1.0
+
+# Utilities
+aiofiles==23.2.1
+
+# Scheduler (for automated weekly reports)
+APScheduler==3.10.4
+pytz==2024.1
+
+# Google Play Store scraper
+google-play-scraper==1.2.4
