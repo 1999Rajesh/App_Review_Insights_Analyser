@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8000';
+// Use Railway URL as default (update with your actual Railway URL)
+const API_BASE_URL = 'https://your-railway-url.up.railway.app/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
