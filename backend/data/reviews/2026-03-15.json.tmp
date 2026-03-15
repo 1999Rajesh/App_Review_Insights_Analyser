@@ -1,20 +1,20 @@
 {
   "metadata": {
-    "scrapedAt": "2026-03-15T17:36:57.387884",
+    "scrapedAt": "2026-03-15T19:56:37.419236",
     "packageId": "com.nextbillion.groww",
-    "weeksRequested": 12,
-    "totalFetched": 500,
-    "afterDateFilter": 4388,
-    "totalAfterFilters": 4388,
+    "weeksRequested": 1,
+    "totalFetched": 190841,
+    "afterDateFilter": 960,
+    "totalAfterFilters": 207,
     "filterStats": {
-      "too_short": 3072,
-      "has_emoji": 636,
-      "wrong_language": 212,
+      "too_short": 700,
+      "has_emoji": 35,
+      "wrong_language": 0,
       "pii_removed": 0
     },
     "dateRange": {
-      "from": "2025-12-21T19:13:18",
-      "to": "2026-03-12T09:05:23"
+      "from": "2026-03-08T19:59:38",
+      "to": "2026-03-14T19:26:30"
     },
     "configuration": {
       "language": "en",
@@ -26,11 +26,11 @@
   },
   "reviews": [
     {
-      "reviewId": "c410a171-0bad-4ffd-85d1-efef6ee67bac",
-      "userName": "shanmukh rao",
-      "userImage": "https://play-lh.googleusercontent.com/a-/ALV-UjXsvom_MgiC3s43zzL4njtQhxDApkmoVA8VcWLRL_PaCagBr8tMZQ",
-      "content": "Yesterday, I installed the Groww app and began intraday trading. After buying stocks, I tried to exit my positions but faced an issue with the app. I called customer support and waited about 10 minutes. After a 43 Minute call, she was told that I needed to use a laptop to exit. I realised I would have been in a tough spot if I hadn’t had a laptop available. I also worry about what might have happened if I had invested a larger amount and faced a bigger loss while using the app.",
-      "score": 1,
-      "thumbsUpCount": 3,
-      "reviewCreatedVersion": "18.4.2",
+      "reviewId": "e462eef4-3b5f-4e14-be68-8b315d01962e",
+      "userName": "AVINASH PANDYA",
+      "userImage": "https://play-lh.googleusercontent.com/a-/ALV-UjW1oLoCRNRGW6ZJK6l822YFdQmdvSJYWuXkUj2gjZrz_6Bkm1kf",
+      "content": "superb app but sometimes(in fact many times) the order limit price doesn't reflect in order, I think we need to refresh multiple times and many times we need to close the app and again need to start to see the modify price, please improve this, In fact the game is all about ordering. Thank you",
+      "score": 5,
+      "thumbsUpCount": 0,
+      "reviewCreatedVersion": "18.4.3",
       "at": 

@@ -211,12 +211,14 @@ async def fetch_play_store_reviews_fast() -> Dict:
     try:
         # Read CSV directly using Python csv module (no pandas needed)
         import csv
+        from pathlib import Path
         
-        sample_dir = "sample_data"
-        play_store_file = os.path.join(sample_dir, "play_store_reviews.csv")
+        # Use absolute path from project root
+        project_root = Path(__file__).parent.parent.parent.parent
+        play_store_file = project_root / "sample_data" / "play_store_reviews.csv"
         
-        if not os.path.exists(play_store_file):
-            raise HTTPException(status_code=404, detail="Sample Play Store file not found")
+        if not play_store_file.exists():
+            raise HTTPException(status_code=404, detail=f"Sample Play Store file not found at {play_store_file}")
         
         # Read CSV and convert to Review objects
         new_reviews = []

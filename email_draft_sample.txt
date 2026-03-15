@@ -1,0 +1,101 @@
+Subject: 📊 Weekly App Review Pulse - Critical Insights for Growth Team
+
+Hi Team,
+
+Here's your weekly automated insights report from the App Review Insights Analyzer.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 THIS WEEK'S HEADLINES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔴 CRITICAL: KYC Verification Delays Surge to 45% of Reviews
+   - Users reporting 3-7 day wait times (should be <24hrs)
+   - Aadhaar verification failures increasing
+   - Risk: Losing new users before first investment
+
+🟡 ATTENTION: Withdrawal Processing Complaints Up 28%
+   - Partial withdrawals specifically affected
+   - Bank-specific issues with HDFC, ICICI
+   - TAT slipping from promised T+2 days
+
+🟢 POSITIVE: Customer Support Rated Excellent (92% Positive)
+   - Response time under 1 hour consistently
+   - Knowledgeable agents praised frequently
+   - Major competitive advantage!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 KEY METRICS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Total Reviews This Week: 150 (↑6%)
+Average Rating: 3.2/5 (↓0.2)
+Negative Sentiment: 58% (↑6%)
+
+Top Themes:
+1️⃣ KYC Delays - 45% (Negative)
+2️⃣ Withdrawal Time - 32% (Negative)  
+3️⃣ Support Quality - 23% (Positive)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚨 URGENT ACTIONS NEEDED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FOR ENGINEERING:
+□ Audit KYC API performance - identify bottleneck
+□ Check withdrawal queue processing times
+□ Review database connection pools
+
+FOR PRODUCT:
+□ Prioritize KYC status tracker feature
+□ Define SLA with compensation for delays
+□ Plan infrastructure scaling roadmap
+
+FOR MARKETING:
+□ Prepare response templates for negative reviews
+□ Highlight support excellence in campaigns
+□ Monitor social media sentiment
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💡 QUICK WINS FOR NEXT WEEK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Add estimated KYC completion time to app UI
+2. Send proactive SMS for withdrawal delays >3 days
+3. Create FAQ video for KYC troubleshooting
+4. Enable instant withdrawals up to ₹10K for trusted users
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📈 IMPACT PROJECTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+If we fix KYC delays: Recover ~15% negative sentiment
+If withdrawals improve: Prevent 10-15% user churn
+If support scales: Maintain competitive moat
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 DETAILED REPORT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Full markdown report with user quotes and detailed analysis:
+[Link to weekly_report_sample.md]
+
+Live Dashboard:
+[Link to deployed frontend]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚙️ AUTOMATION STATUS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Report generated automatically every Monday 9 AM
+✅ Powered by Groq AI (Llama 3.3 70B)
+✅ Analysis time: 8.3 seconds
+✅ Next report: March 22, 2026
+
+Questions? Reply to this email or ping the product analytics team.
+
+Best regards,
+Automated Insights System
+App Review Insights Analyzer
+
+---
+P.S. - Our support team is absolutely crushing it! Let's make sure we give them the infrastructure they deserve to keep winning. 🏆
