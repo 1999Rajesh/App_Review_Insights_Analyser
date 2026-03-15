@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { WeeklyReport as WeeklyReportType } from '../services/api';
-import { reportsAPI } from '../services/api';
+import { useState } from 'react';
+import { WeeklyReport as WeeklyReportType, emailAPI } from '../services/api';
 
 interface WeeklyReportProps {
   report: WeeklyReportType;

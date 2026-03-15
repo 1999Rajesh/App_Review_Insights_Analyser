@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ReviewUploader from './components/ReviewUploader';
 import WeeklyReport from './components/WeeklyReport';
 import ThemeLegend from './components/ThemeLegend';
 import SettingsPanel from './components/SettingsPanel';
 import PlayStoreFetcher from './components/PlayStoreFetcher';
-import { analysisAPI, reportsAPI, reviewsAPI } from './services/api';
+import { analysisAPI } from './services/api';
 import type { WeeklyReport as WeeklyReportType } from './services/api';
 import './App.css';
 
