@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// Railway public URL - App Review Insights Analyzer
-const API_BASE_URL = 'https://appreviewinsightsanalyser-production.up.railway.app/api';
+// API Base URL - Use local for development, Railway for production
+const API_BASE_URL = (import.meta as any).env.VITE_API_BASE_URL || 'http://localhost:8000/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -63,12 +63,18 @@ export const reviewsAPI = {
     return api.delete('/api/reviews/');
   },
 
-  fetchPlayStoreReviews: async (params: {
-    weeks: number;
-    max_reviews: number;
-    recipient_name?: string;
-    recipient_email?: string;
+  fetchPlayStoreReviews: async (params?: {
+    weeks?: number;
+    max_reviews?: number;
+    demo_mode?: boolean;
   }) => {
+    // Use fast endpoint for demo mode (instant loading)
+    if (params?.demo_mode) {
+      const response = await api.post('/api/reviews/fetch-play-store-fast');
+      return response.data;
+    }
+    
+    // Use real scraper for production
     const response = await api.post('/api/reviews/fetch-play-store', params);
     return response.data;
   },

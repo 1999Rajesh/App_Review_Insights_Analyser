@@ -197,6 +197,61 @@ async def import_sample_data(weeks: int = 8) -> Dict:
         raise HTTPException(status_code=500, detail=f"Error importing sample data: {str(e)}")
 
 
+@router.post("/fetch-play-store-fast")
+async def fetch_play_store_reviews_fast() -> Dict:
+    """
+    Quick demo endpoint - loads sample Play Store reviews instantly.
+    Perfect for demonstrations without waiting for scraping.
+    
+    Returns:
+        Summary of loaded reviews
+    """
+    global reviews_db
+    
+    try:
+        # Read CSV directly using Python csv module (no pandas needed)
+        import csv
+        
+        sample_dir = "sample_data"
+        play_store_file = os.path.join(sample_dir, "play_store_reviews.csv")
+        
+        if not os.path.exists(play_store_file):
+            raise HTTPException(status_code=404, detail="Sample Play Store file not found")
+        
+        # Read CSV and convert to Review objects
+        new_reviews = []
+        with open(play_store_file, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                try:
+                    review = Review(
+                        id=str(uuid.uuid4()),
+                        source="Play Store",
+                        rating=int(row.get('Star Rating', 3)),
+                        title=str(row.get('Title', ''))[:100],
+                        text=str(row.get('Text', ''))[:500],
+                        date=row.get('Date', datetime.now().isoformat())
+                    )
+                    new_reviews.append(review)
+                except Exception:
+                    # Skip invalid rows
+                    continue
+        
+        # Add to database
+        reviews_db.extend(new_reviews)
+        
+        return {
+            "success": True,
+            "message": f"Loaded {len(new_reviews)} Play Store reviews instantly",
+            "count": len(new_reviews),
+            "total_in_database": len(reviews_db),
+            "demo_mode": True
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error loading sample data: {str(e)}")
+
+
 @router.post("/fetch-play-store")
 async def fetch_play_store_reviews(
     weeks: int = Body(default=8, ge=1, le=52, description="Number of weeks to look back (1-52)"),

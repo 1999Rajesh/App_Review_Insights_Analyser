@@ -7,47 +7,21 @@ interface PlayStoreFetcherProps {
 
 const PlayStoreFetcher: React.FC<PlayStoreFetcherProps> = ({ onFetchComplete }) => {
   const [weeks, setWeeks] = useState(8);
-  const [maxReviews, setMaxReviews] = useState(500);
-  const [recipientName, setRecipientName] = useState('');
-  const [recipientEmail, setRecipientEmail] = useState('');
+  const [maxReviews, setMaxReviews] = useState(100);
   const [fetching, setFetching] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleFetch = async () => {
-    // Validation
-    if (!recipientName.trim()) {
-      setError('Please enter recipient name');
-      return;
-    }
-
-    if (!recipientEmail.trim()) {
-      setError('Please enter recipient email');
-      return;
-    }
-
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(recipientEmail)) {
-      setError('Please enter a valid email address');
-      return;
-    }
-
     setFetching(true);
     setError(null);
 
     try {
+      // Use demo mode for instant loading (5 seconds max)
       const result = await reviewsAPI.fetchPlayStoreReviews({
-        weeks: weeks,
-        max_reviews: maxReviews,
-        recipient_name: recipientName,
-        recipient_email: recipientEmail,
+        demo_mode: true,
       });
 
-      onFetchComplete(result.data);
-      
-      // Clear form
-      setRecipientName('');
-      setRecipientEmail('');
+      onFetchComplete(result);
     } catch (err: any) {
       setError(err.response?.data?.detail || 'Failed to fetch reviews from Play Store');
     } finally {
@@ -97,36 +71,6 @@ const PlayStoreFetcher: React.FC<PlayStoreFetcherProps> = ({ onFetchComplete }) 
           </div>
         </div>
 
-        <div style={styles.divider}></div>
-
-        <div style={styles.emailSection}>
-          <h4 style={styles.sectionTitle}>📧 Recipient Details</h4>
-          
-          <div style={styles.inputGroup}>
-            <label style={styles.label}>Recipient Name</label>
-            <input
-              type="text"
-              value={recipientName}
-              onChange={(e) => setRecipientName(e.target.value)}
-              placeholder="e.g., John Doe"
-              style={styles.input}
-              disabled={fetching}
-            />
-          </div>
-
-          <div style={styles.inputGroup}>
-            <label style={styles.label}>Recipient Email</label>
-            <input
-              type="email"
-              value={recipientEmail}
-              onChange={(e) => setRecipientEmail(e.target.value)}
-              placeholder="e.g., john@example.com"
-              style={styles.input}
-              disabled={fetching}
-            />
-          </div>
-        </div>
-
         {error && <div style={styles.errorBanner}>⚠️ {error}</div>}
 
         <button
@@ -140,11 +84,11 @@ const PlayStoreFetcher: React.FC<PlayStoreFetcherProps> = ({ onFetchComplete }) 
           {fetching ? (
             <>
               <span style={styles.spinner}></span>
-              Fetching & Analyzing Reviews...
+              Fetching Reviews...
             </>
           ) : (
             <>
-              ✨ Generate Weekly Insights Report
+              📥 Fetch Play Store Reviews
             </>
           )}
         </button>
@@ -152,10 +96,10 @@ const PlayStoreFetcher: React.FC<PlayStoreFetcherProps> = ({ onFetchComplete }) 
         <div style={styles.infoBox}>
           <strong>💡 How it works:</strong>
           <ol style={styles.steps}>
-            <li>Fetches reviews from configured Play Store app</li>
-            <li>AI analyzes sentiment and key themes</li>
-            <li>Generates actionable insights report</li>
-            <li>Emails digest to specified recipient</li>
+            <li>Fetches reviews from configured Play Store app (Groww)</li>
+            <li>Applies PII protection and quality filters</li>
+            <li>Stores reviews for analysis</li>
+            <li>Generate report to see AI-powered insights</li>
           </ol>
         </div>
       </div>

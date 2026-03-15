@@ -5,13 +5,17 @@ from typing import List
 class Settings(BaseSettings):
     """Application configuration"""
     
-    # Groq API (Deprecated - kept for backward compatibility)
-    GROQ_API_KEY: str = ""
+    # Groq API (PRIMARY LLM - Fast & Free)
+    GROQ_API_KEY: str
     GROQ_MODEL: str = "llama-3.3-70b-versatile"
     
-    # Google Gemini API (Primary LLM)
-    GEMINI_API_KEY: str
-    GEMINI_MODEL: str = "gemini-1.5-flash"
+    # Google Gemini API (Alternative/Fallback)
+    GEMINI_API_KEY: str = ""
+    GEMINI_MODEL: str = "gemini-2.5-flash"
+    
+    # AI Studio API (Alternative)
+    AISTUDIO_API_KEY: str = ""
+    AISTUDIO_MODEL: str = "gemini-2.5-flash"
     
     # SMTP Email
     SMTP_SERVER: str = "smtp.gmail.com"
@@ -41,6 +45,7 @@ class Settings(BaseSettings):
     # Scheduler Settings
     SCHEDULER_INTERVAL_MINUTES: int = 5  # Run every 5 minutes for testing
     SCHEDULER_LOG_FILE: str = "logs/scheduler.log"
+    SCHEDULER_ENABLED: bool = True
     
     # Railway Deployment
     PORT: int = 8000

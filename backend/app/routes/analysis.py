@@ -3,7 +3,7 @@ from typing import Dict, List
 from datetime import datetime, timedelta
 import uuid
 from app.models.review import Review, WeeklyReport, ThemeAnalysis
-from app.services.gemini_analyzer import GeminiAnalyzer
+from app.services.groq_analyzer import GroqAnalyzer
 from app.routes.reviews import reviews_db, reports_db
 
 router = APIRouter(prefix="/api/analysis", tags=["analysis"])
@@ -24,8 +24,8 @@ async def generate_weekly_report() -> WeeklyReport:
         )
     
     try:
-        # Initialize analyzer with Gemini (Phase 3)
-        analyzer = GeminiAnalyzer()
+        # Initialize analyzer with Groq (PRIMARY LLM - Fast & Free)
+        analyzer = GroqAnalyzer()
         
         # Use maximum 200 reviews for classification (as per hint)
         reviews_to_analyze = reviews_db[:200] if len(reviews_db) > 200 else reviews_db

@@ -30,14 +30,14 @@ app.include_router(email.router)
 app.include_router(scheduler.router)
 
 
-# Start scheduler on application startup
+# Start scheduler on application startup (DISABLED FOR DEMO)
 @app.on_event("startup")
 async def startup_event():
-    """Initialize and start the weekly pulse scheduler and auto-import sample data"""
+    """Initialize and auto-import sample data (scheduler disabled)"""
     try:
-        # Start the weekly pulse scheduler
-        scheduler_instance = get_scheduler()
-        scheduler_instance.start()
+        # Scheduler DISABLED for demo - prevents Gemini quota errors
+        # scheduler_instance = get_scheduler()
+        # scheduler_instance.start()
         
         # Auto-import sample review data
         importer = ReviewImporter()

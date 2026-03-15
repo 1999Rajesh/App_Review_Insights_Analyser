@@ -1,15 +1,15 @@
 {
   "metadata": {
-    "scrapedAt": "2026-03-15T17:13:21.382446",
+    "scrapedAt": "2026-03-15T17:36:57.387884",
     "packageId": "com.nextbillion.groww",
     "weeksRequested": 12,
     "totalFetched": 500,
-    "afterDateFilter": 4384,
-    "totalAfterFilters": 4384,
+    "afterDateFilter": 4388,
+    "totalAfterFilters": 4388,
     "filterStats": {
-      "too_short": 3046,
-      "has_emoji": 632,
-      "wrong_language": 207,
+      "too_short": 3072,
+      "has_emoji": 636,
+      "wrong_language": 212,
       "pii_removed": 0
     },
     "dateRange": {
