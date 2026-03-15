@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 // Use Railway URL as default (update with your actual Railway URL)
-// For local testing, use localhost
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = 'http://app-review-insights-analyser.railway.internal/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
