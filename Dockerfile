@@ -1,4 +1,7 @@
-# Root Dockerfile for Railway (redirects to backend)
+# Root Dockerfile for Railway Deployment
+# This file copies from backend/ subdirectory
+# Author: App Review Insights Analyzer Team
+# Created: March 15, 2026
 FROM python:3.11-slim
 
 # Set working directory
@@ -15,13 +18,13 @@ RUN apt-get update && apt-get install -y \
     gcc \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements from backend folder
+# Copy requirements from backend folder (CRITICAL PATH)
 COPY backend/requirements.txt .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code from backend folder
+# Copy application code from backend/app folder (CRITICAL PATH)
 COPY backend/app/ ./app/
 
 # Create logs directory

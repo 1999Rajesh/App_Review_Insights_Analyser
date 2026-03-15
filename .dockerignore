@@ -1,0 +1,5 @@
+# Ignore everything except backend folder for Docker build
+**
+!backend/
+!Dockerfile
+!railway.toml
